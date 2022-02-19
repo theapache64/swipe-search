@@ -11,7 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.github.theapache64.swipesearch.ui.screen.dashboard.DashboardScreen
 import com.github.theapache64.swipesearch.ui.screen.splash.SplashScreen
-import com.github.theapache64.swipesearch.ui.theme.Swipe_SearchTheme
+import com.github.theapache64.swipesearch.ui.theme.SwipeSearchTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,9 +23,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            Swipe_SearchTheme {
+            SwipeSearchTheme {
                 Surface {
-                    NavHost(navController = navController, startDestination = Screen.Splash.route) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.Dashboard.route
+                    ) {
 
                         // Splash
                         composable(Screen.Splash.route) {
