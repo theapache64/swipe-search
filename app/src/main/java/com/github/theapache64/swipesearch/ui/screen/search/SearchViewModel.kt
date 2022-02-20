@@ -42,7 +42,7 @@ class SearchViewModel @Inject constructor(
         uiState = uiState.copy(query = newQuery)
         pageNo = 1
         totalPages = -1
-        loadPage(debounce = 600)
+        loadPage(debounce = 300)
     }
 
     fun onItemSwipedOut(item: Item, direction: SwipedOutDirection) {
