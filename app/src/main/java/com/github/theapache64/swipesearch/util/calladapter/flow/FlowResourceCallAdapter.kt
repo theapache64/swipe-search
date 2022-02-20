@@ -34,7 +34,7 @@ class FlowResourceCallAdapter<R>(
             }
         } else {
             // Error
-            val errorBody = resp.message()
+            val errorBody = resp.errorBody()?.string() ?: "Unknown"
             emit(Resource.Error(errorBody))
         }
 

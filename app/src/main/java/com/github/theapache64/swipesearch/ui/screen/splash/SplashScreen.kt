@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,6 +11,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -37,11 +38,10 @@ fun SplashScreen(
 
         // Logo
         Image(
-            painter = painterResource(id = R.drawable.ic_compose_logo),
+            painter = painterResource(id = R.drawable.github),
+            colorFilter = ColorFilter.tint(Color.White),
             contentDescription = stringResource(id = R.string.cd_app_logo),
-            modifier = Modifier
-                .size(200.dp)
-                .align(Alignment.Center),
+            modifier = Modifier.align(Alignment.Center),
         )
 
         // Version number

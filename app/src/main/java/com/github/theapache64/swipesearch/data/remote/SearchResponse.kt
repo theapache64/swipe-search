@@ -17,7 +17,7 @@ data class SearchResponse(
 @JsonClass(generateAdapter = true)
 data class Item(
     @Json(name = "description")
-    val description: String, // The Kotlin Programming Language.
+    val description: String?, // The Kotlin Programming Language.
     @Json(name = "html_url")
     val htmlUrl: String, // https://github.com/JetBrains/kotlin
     @Json(name = "name")

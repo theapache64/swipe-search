@@ -20,7 +20,7 @@ import kotlin.math.abs
 interface CardController {
     val cardX: Float
     val cardY: Float
-    val rotationFraction: Float
+    val rotation: Float
 
     fun onDrag(dragAmount: Offset)
     fun onDragCancel()
@@ -58,7 +58,7 @@ class CardControllerImpl(
     override val cardY: Float
         get() = swipeY.value
 
-    override val rotationFraction: Float
+    override val rotation: Float
         get() = (swipeX.value / 60).coerceIn(-40f, 40f)
 
     override fun onDrag(dragAmount: Offset) {

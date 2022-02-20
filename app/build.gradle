@@ -65,10 +65,21 @@ dependencies {
     // Navigation Compose Hilt Integration : Navigation Compose Hilt Integration
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
-
     // Retrofit : A type-safe HTTP client for Android and Java.
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
 
     // Converter: Moshi : A Retrofit Converter which uses Moshi for serialization.
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+
+    // Coil Compose : An image loading library for Android backed by Kotlin Coroutines.
+    implementation 'io.coil-kt:coil-compose:1.4.0'
+
+    // Moshi Kotlin Codegen : A modern JSON API for Android and Java
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.13.0'
+
+    // Moshi : A modern JSON API for Android and Java
+    implementation 'com.squareup.moshi:moshi:1.13.0'
+
+    // Timber : No-nonsense injectable logging.
+    implementation 'com.jakewharton.timber:timber:5.0.1'
 }

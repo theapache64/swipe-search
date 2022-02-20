@@ -7,16 +7,12 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
-interface SearchRepo {
-    fun search(query: String): Flow<Resource<SearchResponse>>
-}
-
 @Singleton
-class SearchRepoImpl @Inject constructor(
+class SearchRepo @Inject constructor(
     private val githubApi: GitHubApi
-) : SearchRepo {
+) {
     // TODO: Create a domain model and mapper to avoid using remote model at UI level
-    override fun search(query: String): Flow<Resource<SearchResponse>> {
-        return githubApi.searchRepos(query)
+    fun search(query: String, page: Int): Flow<Resource<SearchResponse>> {
+        return githubApi.searchRepos(query, page)
     }
 }
