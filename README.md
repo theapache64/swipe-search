@@ -1,14 +1,14 @@
 ![](cover.jpeg)
 
-# compose-android-template
+# swipe-search
 
-![buildStatus](https://img.shields.io/github/workflow/status/theapache64/compose-android-template/Java%20CI%20with%20Gradle?style=plastic)
-![latestVersion](https://img.shields.io/github/v/release/theapache64/compose-android-template)
+![buildStatus](https://img.shields.io/github/workflow/status/theapache64/swipe-search/Java%20CI%20with%20Gradle?style=plastic)
+![latestVersion](https://img.shields.io/github/v/release/theapache64/swipe-search)
 <a href="https://twitter.com/theapache64" target="_blank">
 <img alt="Twitter: theapache64" src="https://img.shields.io/twitter/follow/theapache64.svg?style=social" />
 </a>
 
-> An Android project template with MVVM, Hilt, Navigation and Compose
+> A sample app to showcase Twyper with GitHub repo search API
 
 ## ✍️ Author
 
@@ -45,14 +45,11 @@ Give a ⭐️ if this project helped you!
     <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" width="160">
 </a>
 
-## ☑️ TODO
-
-- [x] Integrate with [create-compose-app](https://github.com/theapache64/create-compose-app)
 
 ## 📝 License
 
 ```
-Copyright © 2021 - theapache64
+Copyright © 2022 - theapache64
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

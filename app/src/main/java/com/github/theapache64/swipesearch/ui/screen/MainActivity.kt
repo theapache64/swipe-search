@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
             SwipeSearchTheme {
                 NavHost(
                     navController = navController,
-                    startDestination = Screen.Search.route
+                    startDestination = Screen.Splash.route
                 ) {
 
                     // Splash
