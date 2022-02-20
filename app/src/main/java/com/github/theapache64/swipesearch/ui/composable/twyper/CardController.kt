@@ -44,7 +44,6 @@ fun rememberCardController(): CardController {
     }
 }
 
-
 class CardControllerImpl(
     private val swipeX: Animatable<Float, AnimationVector1D>,
     private val swipeY: Animatable<Float, AnimationVector1D>,

@@ -20,8 +20,9 @@ import timber.log.Timber
 import javax.inject.Inject
 
 data class SearchUiState(
-    val loadingMessage: String? = null,
-    val errorMessage: String? = null,
+    val loadingMsg: String? = null,
+    val blockingMsg: String? = "🔍 Use the above text field to start explore!",
+    val parallelMsg: String? = null,
     val query: String = "",
     val items: SnapshotStateList<Item> = mutableStateListOf()
 )
@@ -36,10 +37,6 @@ class SearchViewModel @Inject constructor(
     var totalPages = -1
     var uiState by mutableStateOf(SearchUiState())
         private set
-
-    init {
-        onQueryChanged("OkHttp")
-    }
 
     fun onQueryChanged(newQuery: String) {
         uiState = uiState.copy(query = newQuery)
@@ -65,8 +62,8 @@ class SearchViewModel @Inject constructor(
 
         if (totalPages != -1 && pageNo > totalPages) {
             uiState = uiState.copy(
-                errorMessage = "No more results",
-                loadingMessage = null
+                blockingMsg = "No more results",
+                loadingMsg = null
             )
             return
         }
@@ -83,8 +80,8 @@ class SearchViewModel @Inject constructor(
                     is Resource.Error -> {
                         Timber.d("onPageEndReached: Error: '${it.errorData}'")
                         uiState = uiState.copy(
-                            loadingMessage = null,
-                            errorMessage = it.errorData
+                            loadingMsg = null,
+                            blockingMsg = it.errorData
                         )
                     }
                     is Resource.Loading -> {
@@ -94,25 +91,37 @@ class SearchViewModel @Inject constructor(
                             "Loading page $pageNo/$totalPages"
                         }
                         uiState = uiState.copy(
-                            loadingMessage = message,
-                            errorMessage = null
+                            loadingMsg = message,
+                            blockingMsg = null,
+                            parallelMsg = if (pageNo == 1) {
+                                null
+                            } else {
+                                uiState.parallelMsg
+                            }
                         )
                     }
                     is Resource.Success -> {
-                        val items = it.data.items
-                        if (items.isNotEmpty()) {
-                            totalPages = it.data.totalCount / items.size
-                            with(uiState) {
-                                this.items.clear()
-                                this.items.addAll(items)
-                                uiState = copy(loadingMessage = null, errorMessage = null)
+                        val remoteItems = it.data.items
+                        with(uiState) {
+                            this.items.clear()
+
+                            if (remoteItems.isNotEmpty()) {
+                                totalPages = it.data.totalCount / remoteItems.size
+                                this.items.addAll(remoteItems)
+                                uiState = copy(
+                                    loadingMsg = null,
+                                    blockingMsg = null,
+                                    parallelMsg = "Found ${it.data.totalCount} repo(s)"
+                                )
+
+                            } else {
+                                totalPages = -1
+                                uiState = copy(
+                                    loadingMsg = null,
+                                    blockingMsg = "No result found for '$query'",
+                                    parallelMsg = null
+                                )
                             }
-                        } else {
-                            totalPages = -1
-                            uiState = uiState.copy(
-                                loadingMessage = null,
-                                errorMessage = "No result found for '$query'"
-                            )
                         }
 
                     }
