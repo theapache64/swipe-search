@@ -65,4 +65,10 @@ dependencies {
     // Navigation Compose Hilt Integration : Navigation Compose Hilt Integration
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
+
+    // Retrofit : A type-safe HTTP client for Android and Java.
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // Converter: Moshi : A Retrofit Converter which uses Moshi for serialization.
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
 }

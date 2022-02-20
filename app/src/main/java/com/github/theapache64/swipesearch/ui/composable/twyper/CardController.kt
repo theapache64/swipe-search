@@ -14,6 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
+/**
+ * To control individual card
+ */
 interface CardController {
     val cardX: Float
     val cardY: Float
@@ -73,8 +76,8 @@ class CardControllerImpl(
     }
 
     override fun onDragEnd() {
-        val isSwipedOneForth = abs(swipeX.targetValue) > abs(screenWidth) / 3
-        if (isSwipedOneForth) {
+        val isSwipedOneThird = abs(swipeX.targetValue) > abs(screenWidth) / 3
+        if (isSwipedOneThird) {
             scope.launch {
                 if (swipeX.targetValue > 0) {
                     swipeX.animateTo(screenWidth, tween(400))

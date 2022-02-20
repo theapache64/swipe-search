@@ -1,0 +1,46 @@
+{
+ "added": [
+  {
+   "id": 1,
+   "type": "implementation",
+   "installed_name": "retrofit",
+   "gpm_dep": {
+    "artifact_id": "retrofit",
+    "default_type": "implementation",
+    "docs": "https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit",
+    "get_from": "Central",
+    "group_id": "com.squareup.retrofit2",
+    "name": "Retrofit",
+    "description": "A type-safe HTTP client for Android and Java."
+   }
+  },
+  {
+   "id": 2,
+   "type": "implementation",
+   "installed_name": "moshi-converter",
+   "gpm_dep": {
+    "artifact_id": "converter-moshi",
+    "default_type": "implementation",
+    "docs": "https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-moshi",
+    "get_from": "Central",
+    "group_id": "com.squareup.retrofit2",
+    "name": "Converter: Moshi",
+    "description": "A Retrofit Converter which uses Moshi for serialization."
+   }
+  },
+  {
+   "id": 3,
+   "type": "implementation",
+   "installed_name": "appcompat",
+   "gpm_dep": {
+    "artifact_id": "appcompat",
+    "default_type": "implementation",
+    "docs": "https://mvnrepository.com/artifact/androidx.appcompat/appcompat",
+    "get_from": "Google",
+    "group_id": "androidx.appcompat",
+    "name": "Android AppCompat Library",
+    "description": "The Support Library is a static library that you can add to your Android application in order to use APIs that are either not available for older platform versions or utility APIs that aren't a part of the framework APIs. Compatible on devices running API 14 or later."
+   }
+  }
+ ]
+}
