@@ -10,13 +10,25 @@
 
 > A sample app to showcase Twyper with GitHub repo search API
 
-## Demo
-
-
+## 📺 Demo
 
 https://user-images.githubusercontent.com/9678279/154852171-184ff026-f2e4-4ff7-9782-4ab3d9947bf7.mov
 
+## 📚 Tech Stack
 
+| What  |How |
+|---|---|
+| UI  | Compose |
+| DI  | Hilt |
+| Navigation  | Jetpack Navigation |
+| Networking  | Retrofit |
+| JSON Serialization  | Moshi |
+| Image Loading  | Coil Compose |
+| Logging  | Timber |
+
+## 🧾 TODO
+
+- Write unit test and UI test
 
 ## ✍️ Author
 
