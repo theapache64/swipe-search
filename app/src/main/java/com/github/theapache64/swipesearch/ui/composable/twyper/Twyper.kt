@@ -61,11 +61,11 @@ inline fun <reified T> Twyper(
                         renderItem(item)
                     }
                 } else {
-                    val outDirection = cardController.getSwipedOutDirection()
-                    onItemRemoved(item, outDirection)
-
-                    if (items.isEmpty()) {
-                        onEmpty()
+                    cardController.swipedOutDirection?.let { outDirection ->
+                        onItemRemoved(item, outDirection)
+                        if (items.isEmpty()) {
+                            onEmpty()
+                        }
                     }
                 }
             }

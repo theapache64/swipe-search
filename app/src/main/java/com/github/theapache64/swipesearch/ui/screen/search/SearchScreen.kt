@@ -33,8 +33,10 @@ fun SearchScreen(
             .fillMaxSize()
             .padding(10.dp),
     ) {
+        // Some top margin
         Spacer(modifier = Modifier.height(10.dp))
 
+        // App title
         Text(
             text = stringResource(id = R.string.app_name),
             style = MaterialTheme.typography.h4
@@ -42,6 +44,7 @@ fun SearchScreen(
 
         Spacer(modifier = Modifier.height(10.dp))
 
+        // The input field
         SearchInput(
             query = viewModel.uiState.query,
             onQueryChanged = { newQuery ->
@@ -51,8 +54,7 @@ fun SearchScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-
-        viewModel.uiState.parallelMsg?.let { parallelMsg ->
+        viewModel.uiState.subTitle?.let { parallelMsg ->
             Text(
                 text = parallelMsg,
                 modifier = Modifier.align(CenterHorizontally),

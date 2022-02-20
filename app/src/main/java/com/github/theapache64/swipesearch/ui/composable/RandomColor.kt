@@ -7,6 +7,9 @@ import androidx.compose.ui.graphics.Color
 
 private val rgbRange = 0..255
 
+/**
+ * Generate a random color that's survivable through configuration changes
+ */
 @Composable
 fun rememberRandomColor(): Color {
     return rememberSaveable(

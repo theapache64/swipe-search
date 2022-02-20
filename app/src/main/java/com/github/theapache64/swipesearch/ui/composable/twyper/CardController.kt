@@ -21,14 +21,18 @@ interface CardController {
     val cardX: Float
     val cardY: Float
     val rotation: Float
+    var swipedOutDirection: SwipedOutDirection?
 
     fun onDrag(dragAmount: Offset)
     fun onDragCancel()
     fun onDragEnd()
+
+    /**
+     * To check if the card gone out of screen bound
+     */
     fun isCardOut(): Boolean
     fun swipeRight()
     fun swipeLeft()
-    fun getSwipedOutDirection(): SwipedOutDirection
 }
 
 
@@ -50,6 +54,9 @@ class CardControllerImpl(
     private val scope: CoroutineScope,
     private val screenWidth: Float,
 ) : CardController {
+    companion object {
+        private const val SWIPE_DURATION_IN_MILLIS = 450
+    }
 
     override val cardX: Float
         get() = swipeX.value
@@ -59,8 +66,10 @@ class CardControllerImpl(
 
     override val rotation: Float
         get() = (swipeX.value / 60).coerceIn(-40f, 40f)
+    override var swipedOutDirection: SwipedOutDirection? = null
 
     override fun onDrag(dragAmount: Offset) {
+        // Moving card to touch position
         scope.apply {
             launch { swipeX.animateTo(swipeX.targetValue + dragAmount.x) }
             launch { swipeY.animateTo(swipeY.targetValue + dragAmount.y) }
@@ -68,6 +77,7 @@ class CardControllerImpl(
     }
 
     override fun onDragCancel() {
+        // Drag cancelled for some reason. Moving back to origin
         scope.apply {
             launch { swipeX.animateTo(0f) }
             launch { swipeY.animateTo(0f) }
@@ -75,14 +85,15 @@ class CardControllerImpl(
     }
 
     override fun onDragEnd() {
+        // User has ended the drag. Below we're getting the card's position to identify if it's gone
+        // out of bounds.
         val isSwipedOneThird = abs(swipeX.targetValue) > abs(screenWidth) / 3
         if (isSwipedOneThird) {
-            scope.launch {
-                if (swipeX.targetValue > 0) {
-                    swipeX.animateTo(screenWidth, tween(400))
-                } else {
-                    swipeX.animateTo(-screenWidth, tween(400))
-                }
+            // Card's 1/3 is out
+            if (swipeX.targetValue > 0) {
+                swipeRight()
+            } else {
+                swipeLeft()
             }
         } else {
             // go back to origin
@@ -96,22 +107,15 @@ class CardControllerImpl(
 
     override fun swipeRight() {
         scope.launch {
-            swipeX.animateTo(screenWidth, tween(400))
+            swipedOutDirection = SwipedOutDirection.RIGHT
+            swipeX.animateTo(screenWidth, tween(SWIPE_DURATION_IN_MILLIS))
         }
     }
 
     override fun swipeLeft() {
         scope.launch {
-            swipeX.animateTo(-screenWidth, tween(400))
+            swipedOutDirection = SwipedOutDirection.LEFT
+            swipeX.animateTo(-screenWidth, tween(SWIPE_DURATION_IN_MILLIS))
         }
     }
-
-    override fun getSwipedOutDirection(): SwipedOutDirection {
-        return if (swipeX.targetValue < 0) {
-            SwipedOutDirection.LEFT
-        } else {
-            SwipedOutDirection.RIGHT
-        }
-    }
-
 }

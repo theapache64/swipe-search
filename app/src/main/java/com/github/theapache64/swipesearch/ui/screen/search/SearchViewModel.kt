@@ -19,11 +19,23 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
+/**
+ * One object to hold entire UI state.
+ * TODO: Consider create mutually exclusive state (using sealed class) if grows.
+ */
 data class SearchUiState(
+    /**
+     * To show message with progressbar
+     */
     val loadingMsg: String? = null,
+    /**
+     * To show message (without progressbar)
+     */
     val blockingMsg: String? = "🔍 Use the above text field to start explore!",
-    val parallelMsg: String? = null,
+    val subTitle: String? = null,
     val query: String = "",
+    // Using SnapshotStateList because remove/addCall will trigger a recomposition automatically.
+    // No need to mutate the entire
     val items: SnapshotStateList<Item> = mutableStateListOf()
 )
 
@@ -32,16 +44,27 @@ class SearchViewModel @Inject constructor(
     private val searchRepo: SearchRepo
 ) : ViewModel() {
 
+    /**
+     * To support request debounce
+     */
     private var searchJob: Job? = null
-    var pageNo = 0
-    var totalPages = -1
+    private var pageNo = 0
+
+    /**
+     * -1 = first API not done yet
+     */
+    private var totalPages = -1
     var uiState by mutableStateOf(SearchUiState())
         private set
 
     fun onQueryChanged(newQuery: String) {
+        // To update textField UI
         uiState = uiState.copy(query = newQuery)
+        // reset page no
         pageNo = 1
         totalPages = -1
+
+        // make first API call
         loadPage(debounce = 300)
     }
 
@@ -85,6 +108,10 @@ class SearchViewModel @Inject constructor(
                         )
                     }
                     is Resource.Loading -> {
+                        /**
+                         * If it's the first API call, we'll simply show 'Loading first page',
+                         * otherwise we'll show loading with current page and total page available.
+                         */
                         val message = if (totalPages == -1) {
                             "Loading first page"
                         } else {
@@ -93,10 +120,10 @@ class SearchViewModel @Inject constructor(
                         uiState = uiState.copy(
                             loadingMsg = message,
                             blockingMsg = null,
-                            parallelMsg = if (pageNo == 1) {
+                            subTitle = if (pageNo == 1) {
                                 null
                             } else {
-                                uiState.parallelMsg
+                                uiState.subTitle
                             }
                         )
                     }
@@ -104,14 +131,13 @@ class SearchViewModel @Inject constructor(
                         val remoteItems = it.data.items
                         with(uiState) {
                             this.items.clear()
-
                             if (remoteItems.isNotEmpty()) {
                                 totalPages = it.data.totalCount / remoteItems.size
                                 this.items.addAll(remoteItems)
                                 uiState = copy(
                                     loadingMsg = null,
                                     blockingMsg = null,
-                                    parallelMsg = "Found ${it.data.totalCount} repo(s)"
+                                    subTitle = "Found ${it.data.totalCount} repo(s)"
                                 )
 
                             } else {
@@ -119,7 +145,7 @@ class SearchViewModel @Inject constructor(
                                 uiState = copy(
                                     loadingMsg = null,
                                     blockingMsg = "No result found for '$query'",
-                                    parallelMsg = null
+                                    subTitle = null
                                 )
                             }
                         }
