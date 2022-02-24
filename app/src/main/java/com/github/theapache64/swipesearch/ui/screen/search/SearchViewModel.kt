@@ -92,7 +92,15 @@ class SearchViewModel @Inject constructor(
         }
 
         val query = uiState.query
-        if (query.isBlank()) return
+        if (query.isBlank()) {
+            uiState = uiState.copy(
+                loadingMsg = null,
+                blockingMsg = "🔍 Let's explore again!",
+            ).apply {
+                items.clear()
+            }
+            return
+        }
         searchJob = viewModelScope.launch {
             delay(debounce)
             searchRepo.search(
